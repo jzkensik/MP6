@@ -351,6 +351,9 @@ public final class MainActivity extends AppCompatActivity {
          * Add code here to show the caption, show or hide the dog and cat icons,
          * and deal with Rick.
          */
+        String caption = RecognizePhoto.getCaption(jsonResult);
+        boolean dog = RecognizePhoto.isADog(jsonResult, .2);
+        boolean cat = RecognizePhoto.isACat(jsonResult, .2);
     }
 
     /** Current bitmap we are working with. */

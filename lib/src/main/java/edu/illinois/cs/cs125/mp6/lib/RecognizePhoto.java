@@ -12,9 +12,14 @@ public final class RecognizePhoto {
      * @return the width of the image or 0 on failure
      */
     public static int getWidth(final String json) {
+        if (json == null) {
+            return 0;
+        }
         JsonParser parser = new JsonParser();
         JsonObject result = parser.parse(json).getAsJsonObject();
-        return result.get("width").getAsInt();
+        JsonObject total = result.getAsJsonObject("metadata");
+        int width = total.get("width").getAsInt();
+        return width;
     }
 
     /**
@@ -24,7 +29,14 @@ public final class RecognizePhoto {
      * @return the width of the image or 0 on failure
      */
     public static int getHeight(final String json) {
-        return 0;
+        if (json == null) {
+            return 0;
+        }
+        JsonParser parser = new JsonParser();
+        JsonObject result = parser.parse(json).getAsJsonObject();
+        JsonObject total = result.getAsJsonObject("metadata");
+        int height = total.get("height").getAsInt();
+        return height;
     }
 
     /**
@@ -35,5 +47,17 @@ public final class RecognizePhoto {
      */
     public static String getFormat(final String json) {
         return "";
+    }
+    public static String getCaption(final String json) {
+        return "";
+    }
+    public static boolean isADog(String json, double minConfidence) {
+        return false;
+    }
+    public static boolean isACat(String json, double minConfidence) {
+        return false;
+    }
+    public static boolean isRick(String json){
+        return false;
     }
 }
