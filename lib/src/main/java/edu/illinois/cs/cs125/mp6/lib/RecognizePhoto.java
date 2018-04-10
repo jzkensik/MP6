@@ -46,7 +46,14 @@ public final class RecognizePhoto {
      * @return the type of the image or null
      */
     public static String getFormat(final String json) {
-        return "";
+        if (json == null) {
+            return null;
+        }
+        JsonParser parser = new JsonParser();
+        JsonObject result = parser.parse(json).getAsJsonObject();
+        JsonObject total = result.getAsJsonObject("metadata");
+        String format = total.get("format").getAsString();
+        return format;
     }
     public static String getCaption(final String json) {
         return "";
