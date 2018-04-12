@@ -1,6 +1,7 @@
 package edu.illinois.cs.cs125.mp6.lib;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 public final class RecognizePhoto {
@@ -59,9 +60,43 @@ public final class RecognizePhoto {
         return "";
     }
     public static boolean isADog(String json, double minConfidence) {
+        if (json == null) {
+            return false;
+        }
+        JsonParser parser = new JsonParser();
+        JsonObject object = parser.parse(json).getAsJsonObject();
+        JsonArray tag = object.getAsJsonArray("tags");
+        for (JsonElement name: tag ) {
+            JsonObject dog = name.getAsJsonObject();
+            String doggy = dog.get("name").getAsString();
+            if (doggy.equals("dog")) {
+                double confide = dog.get("confidence").getAsDouble();
+                if (confide >= minConfidence) {
+                    return true;
+                }
+                return false;
+            }
+        }
         return false;
     }
     public static boolean isACat(String json, double minConfidence) {
+        if (json == null) {
+            return false;
+        }
+        JsonParser parser = new JsonParser();
+        JsonObject object = parser.parse(json).getAsJsonObject();
+        JsonArray tag = object.getAsJsonArray("tags");
+        for (JsonElement name: tag ) {
+            JsonObject cat = name.getAsJsonObject();
+            String kitty = cat.get("name").getAsString();
+            if (kitty.equals("cat")) {
+                double confide = cat.get("confidence").getAsDouble();
+                if (confide >= minConfidence) {
+                    return true;
+                }
+                return false;
+            }
+        }
         return false;
     }
     public static boolean isRick(String json){
