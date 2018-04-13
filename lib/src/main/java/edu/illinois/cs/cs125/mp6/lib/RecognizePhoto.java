@@ -120,7 +120,7 @@ public final class RecognizePhoto {
         JsonArray tag = object.getAsJsonArray("tags");
         for (JsonElement name: tag ) {
             JsonObject yes = name.getAsJsonObject();
-            JsonArray secondArray = yes.getAsJsonArray("celebrities");
+            JsonArray secondArray = yes.getAsJsonArray("celebrity");
             for (JsonElement arrghh: secondArray) {
                 JsonObject no = arrghh.getAsJsonObject();
                 String rick = no.get("name").getAsString();
