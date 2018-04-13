@@ -4,6 +4,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+/**
+ * Classifies pictures based off of APIs.
+ */
 public final class RecognizePhoto {
 
     /**
@@ -56,6 +60,12 @@ public final class RecognizePhoto {
         String format = total.get("format").getAsString();
         return format;
     }
+
+    /**
+     * Returns captions for pictures in JSON format.
+     * @param json the string put in.
+     * @return the caption
+     */
     public static String getCaption(final String json) {
         if (json == null) {
             return null;
@@ -64,14 +74,21 @@ public final class RecognizePhoto {
         JsonObject object = parser.parse(json).getAsJsonObject();
         JsonObject description = object.getAsJsonObject("description");
         JsonArray array = description.getAsJsonArray("captions");
-        for (JsonElement caption: array ) {
+        for (JsonElement caption: array) {
             JsonObject captor = caption.getAsJsonObject();
             String doggy = captor.get("text").getAsString();
             return doggy;
         }
         return null;
     }
-    public static boolean isADog(String json, double minConfidence) {
+
+    /**
+     * Checks to see if an image is of a dog.
+     * @param json the string taken
+     * @param minConfidence the minimum confidence needed to identify an object
+     * @return if the image is of a dog.
+     */
+    public static boolean isADog(final String json, final double minConfidence) {
         if (json == null) {
             return false;
         }
@@ -81,7 +98,7 @@ public final class RecognizePhoto {
         if (tag == null) {
             return false;
         }
-        for (JsonElement name: tag ) {
+        for (JsonElement name: tag) {
             JsonObject dog = name.getAsJsonObject();
             String doggy = dog.get("name").getAsString();
             if (doggy.equals("dog")) {
@@ -94,7 +111,14 @@ public final class RecognizePhoto {
         }
         return false;
     }
-    public static boolean isACat(String json, double minConfidence) {
+
+    /**
+     * Checks to see if an image is of a cat.
+     * @param json the string fed in
+     * @param minConfidence the minimum confidence to identify an object
+     * @return whether the image is of a cat
+     */
+    public static boolean isACat(final String json, final double minConfidence) {
         if (json == null) {
             return false;
         }
@@ -104,7 +128,7 @@ public final class RecognizePhoto {
         if (tag == null) {
             return false;
         }
-        for (JsonElement name: tag ) {
+        for (JsonElement name: tag) {
             JsonObject cat = name.getAsJsonObject();
             String kitty = cat.get("name").getAsString();
             if (kitty.equals("cat")) {
@@ -117,7 +141,13 @@ public final class RecognizePhoto {
         }
         return false;
     }
-    public static boolean isRick(String json) {
+
+    /**
+     * A meme.
+     * @param json the string fed in
+     * @return If you're ever gonna be given up
+     */
+    public static boolean isRick(final String json) {
         try {
             if (json == null) {
                 return false;
@@ -144,7 +174,7 @@ public final class RecognizePhoto {
                 }
             }
             return false;
-        } catch(NullPointerException f){
+        } catch (NullPointerException f) {
             return false;
         }
     }
