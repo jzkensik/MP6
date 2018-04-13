@@ -354,6 +354,10 @@ public final class MainActivity extends AppCompatActivity {
         String caption = RecognizePhoto.getCaption(jsonResult);
         boolean dog = RecognizePhoto.isADog(jsonResult, .2);
         boolean cat = RecognizePhoto.isACat(jsonResult, .2);
+        boolean nggyu = RecognizePhoto.isRick(jsonResult);
+        if (nggyu == true) {
+            Toast.makeText(this, "Rick Astley", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /** Current bitmap we are working with. */

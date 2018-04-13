@@ -78,6 +78,9 @@ public final class RecognizePhoto {
         JsonParser parser = new JsonParser();
         JsonObject object = parser.parse(json).getAsJsonObject();
         JsonArray tag = object.getAsJsonArray("tags");
+        if (tag == null) {
+            return false;
+        }
         for (JsonElement name: tag ) {
             JsonObject dog = name.getAsJsonObject();
             String doggy = dog.get("name").getAsString();
@@ -98,6 +101,9 @@ public final class RecognizePhoto {
         JsonParser parser = new JsonParser();
         JsonObject object = parser.parse(json).getAsJsonObject();
         JsonArray tag = object.getAsJsonArray("tags");
+        if (tag == null) {
+            return false;
+        }
         for (JsonElement name: tag ) {
             JsonObject cat = name.getAsJsonObject();
             String kitty = cat.get("name").getAsString();
@@ -117,10 +123,17 @@ public final class RecognizePhoto {
         }
         JsonParser parser = new JsonParser();
         JsonObject object = parser.parse(json).getAsJsonObject();
-        JsonArray tag = object.getAsJsonArray("tags");
+        JsonArray tag = object.getAsJsonArray("categories");
+        if (tag == null) {
+            return false;
+        }
         for (JsonElement name: tag ) {
             JsonObject yes = name.getAsJsonObject();
-            JsonArray secondArray = yes.getAsJsonArray("celebrity");
+            JsonObject next = yes.getAsJsonObject("detail");
+            JsonArray secondArray = next.getAsJsonArray("celebrities");
+            if (secondArray == null) {
+                return false;
+            }
             for (JsonElement arrghh: secondArray) {
                 JsonObject no = arrghh.getAsJsonObject();
                 String rick = no.get("name").getAsString();
