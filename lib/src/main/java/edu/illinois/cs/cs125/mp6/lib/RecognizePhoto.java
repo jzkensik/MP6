@@ -117,31 +117,35 @@ public final class RecognizePhoto {
         }
         return false;
     }
-    public static boolean isRick(String json){
-        if (json == null) {
-            return false;
-        }
-        JsonParser parser = new JsonParser();
-        JsonObject object = parser.parse(json).getAsJsonObject();
-        JsonArray tag = object.getAsJsonArray("categories");
-        if (tag == null) {
-            return false;
-        }
-        for (JsonElement name: tag ) {
-            JsonObject yes = name.getAsJsonObject();
-            JsonObject next = yes.getAsJsonObject("detail");
-            JsonArray secondArray = next.getAsJsonArray("celebrities");
-            if (secondArray == null) {
+    public static boolean isRick(String json) {
+        try {
+            if (json == null) {
                 return false;
             }
-            for (JsonElement arrghh: secondArray) {
-                JsonObject no = arrghh.getAsJsonObject();
-                String rick = no.get("name").getAsString();
-                if (rick.equalsIgnoreCase("Rick Astley")) {
-                    return true;
+            JsonParser parser = new JsonParser();
+            JsonObject object = parser.parse(json).getAsJsonObject();
+            JsonArray tag = object.getAsJsonArray("categories");
+            if (tag == null) {
+                return false;
+            }
+            for (JsonElement name : tag) {
+                JsonObject yes = name.getAsJsonObject();
+                JsonObject next = yes.getAsJsonObject("detail");
+                JsonArray secondArray = next.getAsJsonArray("celebrities");
+                if (secondArray == null) {
+                    return false;
+                }
+                for (JsonElement arrghh : secondArray) {
+                    JsonObject no = arrghh.getAsJsonObject();
+                    String rick = no.get("name").getAsString();
+                    if (rick.equalsIgnoreCase("Rick Astley")) {
+                        return true;
+                    }
                 }
             }
+            return false;
+        } catch(NullPointerException f){
+            return false;
         }
-        return false;
     }
 }
