@@ -137,7 +137,7 @@ public final class RecognizePhoto {
             for (JsonElement arrghh: secondArray) {
                 JsonObject no = arrghh.getAsJsonObject();
                 String rick = no.get("name").getAsString();
-                if (rick.equals("Rick Astley")) {
+                if (rick.equalsIgnoreCase("Rick Astley")) {
                     return true;
                 }
             }
