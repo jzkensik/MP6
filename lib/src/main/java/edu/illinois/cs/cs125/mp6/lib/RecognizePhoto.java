@@ -57,7 +57,19 @@ public final class RecognizePhoto {
         return format;
     }
     public static String getCaption(final String json) {
-        return "";
+        if (json == null) {
+            return null;
+        }
+        JsonParser parser = new JsonParser();
+        JsonObject object = parser.parse(json).getAsJsonObject();
+        JsonObject description = object.getAsJsonObject("description");
+        JsonArray array = description.getAsJsonArray("captions");
+        for (JsonElement caption: array ) {
+            JsonObject captor = caption.getAsJsonObject();
+            String doggy = captor.get("text").getAsString();
+            return doggy;
+        }
+        return null;
     }
     public static boolean isADog(String json, double minConfidence) {
         if (json == null) {
@@ -100,6 +112,23 @@ public final class RecognizePhoto {
         return false;
     }
     public static boolean isRick(String json){
+        if (json == null) {
+            return false;
+        }
+        JsonParser parser = new JsonParser();
+        JsonObject object = parser.parse(json).getAsJsonObject();
+        JsonArray tag = object.getAsJsonArray("tags");
+        for (JsonElement name: tag ) {
+            JsonObject yes = name.getAsJsonObject();
+            JsonArray secondArray = yes.getAsJsonArray("celebrities");
+            for (JsonElement arrghh: secondArray) {
+                JsonObject no = arrghh.getAsJsonObject();
+                String rick = no.get("name").getAsString();
+                if (rick.equals("Rick Astley")) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }
