@@ -146,17 +146,17 @@ class Tasks {
 
         /** Url for the MS cognitive services API. */
         private static final String MS_CV_API_URL =
-                "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/analyze";
+                "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr";
 
         /** Default visual features to request. You may need to change this value. */
         private static final String MS_CV_API_DEFAULT_VISUAL_FEATURES =
-                "Categories,Description,Faces,ImageType,Color,Adult";
+                "unk";
 
         /** Default visual features to request. */
         private static final String MS_CV_API_DEFAULT_LANGUAGE = "en";
 
         /** Default visual features to request. You may need to change this value. */
-        private static final String MS_CV_API_DEFAULT_DETAILS = "Celebrities";
+        private static final String MS_CV_API_DEFAULT_DETAILS = "";
 
         /** Subscription key. */
         private static final String SUBSCRIPTION_KEY = BuildConfig.API_KEY;
@@ -212,9 +212,7 @@ class Tasks {
             // Prepare our API request
             String requestURL = Uri.parse(MS_CV_API_URL)
                     .buildUpon()
-                    .appendQueryParameter("visualFeatures", MS_CV_API_DEFAULT_VISUAL_FEATURES)
-                    .appendQueryParameter("details", MS_CV_API_DEFAULT_DETAILS)
-                    .appendQueryParameter("language", MS_CV_API_DEFAULT_LANGUAGE)
+                    .appendQueryParameter("language", MS_CV_API_DEFAULT_VISUAL_FEATURES)
                     .build()
                     .toString();
             Log.d(TAG, "Using URL: " + requestURL);

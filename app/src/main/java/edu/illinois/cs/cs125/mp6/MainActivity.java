@@ -238,6 +238,7 @@ public final class MainActivity extends AppCompatActivity {
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
         photoRequestActive = true;
         startActivityForResult(takePictureIntent, IMAGE_CAPTURE_REQUEST_CODE);
+
     }
 
     /** URL storing the file to download. */
@@ -335,6 +336,7 @@ public final class MainActivity extends AppCompatActivity {
         /*
          * Create a string describing the image type, width and height.
          */
+        /**
         int width = RecognizePhoto.getWidth(jsonResult);
         int height = RecognizePhoto.getHeight(jsonResult);
         String format = RecognizePhoto.getFormat(jsonResult);
@@ -344,13 +346,15 @@ public final class MainActivity extends AppCompatActivity {
         /*
          * Update the UI to display the string.
          */
+        /**
         TextView photoInfo = findViewById(R.id.photoInfo);
         photoInfo.setText(description);
-
+        */
         /*
          * Add code here to show the caption, show or hide the dog and cat icons,
          * and deal with Rick.
          */
+        /**
         String caption = RecognizePhoto.getCaption(jsonResult);
         boolean dog = RecognizePhoto.isADog(jsonResult, .2);
         boolean cat = RecognizePhoto.isACat(jsonResult, .2);
@@ -358,6 +362,7 @@ public final class MainActivity extends AppCompatActivity {
         if (nggyu == true) {
             Toast.makeText(this, "Rick Astley", Toast.LENGTH_SHORT).show();
         }
+         */
     }
 
     /** Current bitmap we are working with. */

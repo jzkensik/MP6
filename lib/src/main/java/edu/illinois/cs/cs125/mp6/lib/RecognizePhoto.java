@@ -66,6 +66,7 @@ public final class RecognizePhoto {
      * @param json the string put in.
      * @return the caption
      */
+
     public static String getCaption(final String json) {
         if (json == null) {
             return null;
