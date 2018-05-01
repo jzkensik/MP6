@@ -233,7 +233,7 @@ class Tasks {
                             }
                             ProgressBar progressBar = activity.findViewById(R.id.progressBar);
                             progressBar.setVisibility(View.INVISIBLE);
-                            activity.finishProcessImage(response);
+                            activity.compareImages(response);
                         }
                     }, new Response.ErrorListener() {
                 @Override

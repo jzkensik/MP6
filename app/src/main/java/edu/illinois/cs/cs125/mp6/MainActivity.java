@@ -32,7 +32,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.apache.commons.io.FileUtils;
@@ -68,6 +70,14 @@ public final class MainActivity extends AppCompatActivity {
 
     /** Whether we can write to public storage. */
     private boolean canWriteToPublicStorage = false;
+
+    public static String jsonexample = "";
+
+    public static String json2example = "";
+
+    public static String json3example = "";
+
+    public static String[] jsonStringArray = {"", ""};
 
     /**
      * Run when our activity comes into view.
@@ -320,19 +330,76 @@ public final class MainActivity extends AppCompatActivity {
     /**
      * Process the result from making the API call.
      *
-     * @param jsonResult the result of the API call as a string
+     * @param json the result of the API call as a string
      * */
+    public void compareImages(final String json) {
+        jsonexample = "";
+        try {
+            JsonParser parser = new JsonParser();
+            JsonObject object = parser.parse(json).getAsJsonObject();
+            JsonArray tag = object.getAsJsonArray("regions");
+            for (JsonElement name : tag) {
+                JsonObject yes = name.getAsJsonObject();
+                JsonArray secondArray = yes.getAsJsonArray("lines");
+                for (JsonElement arrghh : secondArray) {
+                    JsonObject ha = arrghh.getAsJsonObject();
+                    JsonArray thirdArray = ha.getAsJsonArray("words");
+                    for (JsonElement lastOne: thirdArray) {
+                        JsonObject no = lastOne.getAsJsonObject();
+                        String rick = no.get("text").getAsString();
+                        jsonexample = jsonexample + rick;
+                    }
+                }
+            }
+        } catch (NullPointerException f) {
+        }
+        finishProcessImage(jsonexample);
+    }
     protected void finishProcessImage(final String jsonResult) {
-        /*
-         * Pretty-print the JSON into the bottom text-view to help with debugging.
-         */
-        TextView textView = findViewById(R.id.jsonResult);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        JsonParser jsonParser = new JsonParser();
-        JsonElement jsonElement = jsonParser.parse(jsonResult);
-        String prettyJsonString = gson.toJson(jsonElement);
-        textView.setText(prettyJsonString);
+        Log.w(TAG, jsonexample);
+        if (!(jsonStringArray[0].equals("")) && !(jsonStringArray[1].equals(""))) {
+            String temp = jsonStringArray[0];
+            jsonStringArray[1] = temp;
+            jsonStringArray[0] = jsonResult;
+            finalCompareImages(jsonStringArray[0], jsonStringArray[1]);
+            Log.w(TAG, "3");
+        }
+        if (jsonStringArray[1].equals("") && !(jsonStringArray[0].equals(""))) {
+            jsonStringArray[1] = jsonResult;
+            finalCompareImages(jsonStringArray[0], jsonStringArray[1]);
+            Log.w(TAG, "2");
+        }
+        if (jsonStringArray[0].equals("")) {
+            jsonStringArray[0] = jsonResult;
+            Toast.makeText(getApplicationContext(), "first image",
+                    Toast.LENGTH_LONG).show();
+            Log.w(TAG, "empty");
+            Log.w(TAG, "1");
+        }
+    }
 
+        public void finalCompareImages(final String jsonExample, final String json2Example) {
+            /**
+             * the jsons are already the same at this point. We need to figure out why, but I think
+             * it's because you have shallow references above.
+             */
+            Toast.makeText(getApplicationContext(), "The images should be compared",
+                    Toast.LENGTH_LONG).show();
+            Log.w(TAG, "Have the images been compared?");
+            if (jsonExample.equals(json2Example)) {
+                Toast.makeText(getApplicationContext(), "Same",
+                        Toast.LENGTH_LONG).show();
+                Log.w(TAG, "The images are the same");
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Different",
+                        Toast.LENGTH_LONG).show();
+                Log.w(TAG, "The images are different");
+                /**
+                 * from here you'll want to call the vibration
+                 */
+            }
+        }
         /*
          * Create a string describing the image type, width and height.
          */
@@ -363,7 +430,6 @@ public final class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Rick Astley", Toast.LENGTH_SHORT).show();
         }
          */
-    }
 
     /** Current bitmap we are working with. */
     private Bitmap currentBitmap;
