@@ -353,6 +353,9 @@ public final class MainActivity extends AppCompatActivity {
             }
         } catch (NullPointerException f) {
         }
+        if (jsonexample.equals("")) {
+            jsonexample = jsonexample + "^";
+        }
         finishProcessImage(jsonexample);
     }
     protected void finishProcessImage(final String jsonResult) {
