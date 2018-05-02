@@ -368,11 +368,13 @@ public final class MainActivity extends AppCompatActivity {
             Log.w(TAG, "3");
         }
         if (jsonStringArray[1].equals("") && !(jsonStringArray[0].equals(""))) {
-            jsonStringArray[1] = jsonResult;
+            String temp = jsonStringArray[0];
+            jsonStringArray[1] = temp;
+            jsonStringArray[0] = jsonResult;
             finalCompareImages(jsonStringArray[0], jsonStringArray[1]);
             Log.w(TAG, "2");
         }
-        if (jsonStringArray[0].equals("")) {
+        if (jsonStringArray[0].equals("") && jsonStringArray[1].equals("")) {
             jsonStringArray[0] = jsonResult;
             Toast.makeText(getApplicationContext(), "first image",
                     Toast.LENGTH_LONG).show();
@@ -386,8 +388,6 @@ public final class MainActivity extends AppCompatActivity {
              * the jsons are already the same at this point. We need to figure out why, but I think
              * it's because you have shallow references above.
              */
-            Toast.makeText(getApplicationContext(), "The images should be compared",
-                    Toast.LENGTH_LONG).show();
             Log.w(TAG, "Have the images been compared?");
             if (jsonExample.equals(json2Example)) {
                 Toast.makeText(getApplicationContext(), "Same",
