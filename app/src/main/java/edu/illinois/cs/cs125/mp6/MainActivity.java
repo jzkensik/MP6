@@ -3,6 +3,7 @@ package edu.illinois.cs.cs125.mp6;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,6 +14,7 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.VibrationEffect;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -32,6 +34,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import android.os.Vibrator;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -398,10 +401,14 @@ public final class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Different",
                         Toast.LENGTH_LONG).show();
                 Log.w(TAG, "The images are different");
-                /**
-                 * from here you'll want to call the vibration
-                 */
+                Vibrator();
             }
+        }
+        public void Vibrator() {
+            Vibrator x = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            Toast.makeText(getApplicationContext(), "V",
+                    Toast.LENGTH_LONG).show();
+            x.vibrate(500); // for 500 ms
         }
         /*
          * Create a string describing the image type, width and height.
